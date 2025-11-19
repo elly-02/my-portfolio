@@ -1,0 +1,201 @@
+/* src/styles/notebook.css */
+
+/* Google fonts used:
+   - 'Patrick Hand' (playful handwriting)
+   - 'Permanent Marker' (bold marker)
+*/
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Permanent+Marker&display=swap');
+
+/* Tailwind is already imported in index.css; this file contains theme vars + notebook styling */
+
+/* ========== Theme variables ========== */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Light mode: soft notebook paper with lines */
+html.light {
+  --bg-paper: #fffdf8;       /* warm paper */
+  --line-blue: #cfe8ff;      /* faint blue writing line */
+  --line-red: #ffd6d6;       /* left margin red */
+  --title-color: #222;
+  --subtle: #6b7280;
+  --accent: #ff6b9a;         /* pink name tag */
+  --accent-dark: #ff4c7a;
+  --photo-frame: #ffffff;
+  --shadow: rgba(0,0,0,0.15);
+  --doodle-1: #ffd54f;
+  --doodle-2: #6ec5ff;
+  --doodle-3: #ffb3d9;
+}
+
+/* Dark mode: charcoal paper with neon lines */
+html.dark {
+  --bg-paper: #0b1220;       /* deep charcoal */
+  --line-blue: rgba(63, 153, 255, 0.08);
+  --line-red: rgba(255, 95, 150, 0.06);
+  --title-color: #f3f7ff;
+  --subtle: #9ca3af;
+  --accent: #ff66b2;         /* neon pink */
+  --accent-dark: #ff2a8a;
+  --photo-frame: #0f1724;
+  --shadow: rgba(0,0,0,0.6);
+  --doodle-1: #ffe066;
+  --doodle-2: #6fb8ff;
+  --doodle-3: #ff9ad6;
+}
+
+/* ========== Base / paper ========== */
+body {
+  background: var(--bg-paper);
+  color: var(--title-color);
+  font-family: "Patrick Hand", "Permanent Marker", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Notebook lined paper */
+.notebook {
+  min-height: 100vh;
+  background-image:
+    linear-gradient(transparent 28px, var(--line-blue) 28px, var(--line-blue) 29px, transparent 29px),
+    linear-gradient(90deg, var(--line-red) 3px, transparent 3px);
+  background-size: 100% 30px, 100% 30px;
+  background-position: left top, left top;
+  padding: 6rem 1.25rem 4rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* make lines subtler on dark */
+html.dark .notebook {
+  background-image:
+    linear-gradient(transparent 28px, var(--line-blue) 28px, var(--line-blue) 29px, transparent 29px),
+    linear-gradient(90deg, var(--line-red) 4px, transparent 4px);
+}
+
+/* container card centered */
+.cover-card {
+  width: min(820px, 94%);
+  background: transparent;
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+/* Left side: title + summary */
+.cover-left {
+  padding: 1.25rem;
+}
+
+/* Title (large playful handwriting) */
+.notebook-title {
+  font-family: "Permanent Marker", "Patrick Hand", cursive;
+  font-size: clamp(28px, 5vw, 48px);
+  margin: 0 0 0.5rem 0;
+  color: var(--title-color);
+  line-height: 1;
+  text-shadow: 0 2px 0 rgba(0,0,0,0.03);
+}
+
+/* Subtitle (role) */
+.notebook-sub {
+  font-family: "Patrick Hand", cursive;
+  color: var(--subtle);
+  margin-bottom: 1rem;
+  font-size: 14px;
+}
+
+/* Summary paragraph */
+.notebook-summary {
+  font-family: "Patrick Hand", cursive;
+  font-size: 16px;
+  color: var(--title-color);
+  max-width: 44ch;
+  margin-bottom: 1rem;
+}
+
+/* View more button (marker highlight style) */
+.btn-view {
+  display: inline-block;
+  background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+  color: white;
+  padding: 10px 18px;
+  border-radius: 8px;
+  text-transform: uppercase;
+  font-family: "Permanent Marker", cursive;
+  box-shadow: 0 6px 0 rgba(0,0,0,0.12);
+  border: 0;
+  cursor: pointer;
+}
+
+/* ========== Polaroid / photo column ========== */
+.photo-column {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+/* polaroid frame */
+.polaroid {
+  width: 260px;
+  background: var(--photo-frame);
+  padding: 12px;
+  border-radius: 6px;
+  box-shadow: 0 10px 0 var(--shadow);
+  transform: rotate(-6deg);
+  position: relative;
+}
+
+/* actual image inside polaroid */
+.polaroid img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 4px;
+  object-fit: cover;
+  background: #fff;
+}
+
+/* name tag / sticky label under photo */
+.name-tag {
+  margin-top: 10px;
+  display: inline-block;
+  background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-family: "Permanent Marker", cursive;
+  font-size: 16px;
+  transform: rotate(-2deg);
+  box-shadow: 0 6px 0 rgba(0,0,0,0.12);
+}
+
+/* doodles: absolutely positioned svg-like shapes (we'll use CSS shapes) */
+.doodle {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.95;
+}
+
+/* some sample doodles positions */
+.doodle.star { left: -20px; top: -35px; color: var(--doodle-1); transform: rotate(-12deg); }
+.doodle.swirl { right: -26px; bottom: -40px; color: var(--doodle-2); transform: rotate(6deg); }
+.doodle.circle { left: 60px; bottom: -30px; color: var(--doodle-3); transform: rotate(-8deg); }
+
+/* small decorative shapes (SVG via CSS pseudo-element) */
+.doodle svg { width: 56px; height: 56px; display: block; fill: currentColor; }
+
+/* Responsive: stack on mobile */
+@media (max-width: 880px) {
+  .cover-card {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .polaroid { transform: rotate(-2deg); width: 220px; }
+  .name-tag { transform: rotate(0deg); }
+}

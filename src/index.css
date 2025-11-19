@@ -1,13 +1,51 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+html.light {
+  --bg-color: #f8fafc;
+  --text-color: #1f2937;
+  --primary-blue: #2563eb;
+}
+
+html.dark {
+  --bg-color: #0a192f;
+  --text-color: #e2e8f0;
+  --primary-blue: #3b82f6;
+}
+
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Press Start 2P', cursive; 
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* Active Button Style - Inverts the button color */
+.pixel-btn-active {
+  /* Invert colors to show the tab is active */
+  background: var(--primary-white) !important;
+  color: var(--primary-blue) !important;
+  border-color: var(--primary-blue) !important; 
+  /* Prevent movement on activation/hover */
+  box-shadow: 4px 4px var(--primary-blue) !important; 
+  transform: translate(0, 0) !important;
+}
+
+.pixel-btn-active:hover {
+  box-shadow: 4px 4px var(--primary-blue) !important;
+  transform: translate(0, 0) !important;
+}
+
+/* Ensure the button text in the card is styled correctly (if you haven't already) */
+.pixel-card h2 {
+  font-family: 'Press Start 2P', cursive;
+  color: var(--primary-blue); 
+  margin-bottom: 0.5rem;
 }
