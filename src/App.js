@@ -59,7 +59,16 @@ export default function App() {
     <div className="notebook">
       {/* Sticky nav */}
       <header style={{ position: "fixed", top: 12, left: 0, right: 0, zIndex: 40, display: "flex", justifyContent: "center" }}>
-        <nav style={{ background: "transparent", padding: "6px 12px", borderRadius: 10 }}>
+        <nav style={{ 
+            background: theme === 'light' ? 'var(--doodle-2)' : 'var(--doodle-3)', // Use one of the light doodle colors
+            padding: "6px 12px", 
+            borderRadius: 10,
+            // New style: Slight hand-drawn shadow
+            boxShadow: '4px 4px 0px 0px rgba(0, 0, 0, 0.2)', 
+            // Optional: slight rotation
+            transform: 'rotate(1deg)',
+            border: '1px solid var(--subtle)'
+          }}>
           <a href="#about" className="btn-view" style={{ marginRight: 8 }}>About</a>
           <a href="#skills" className="btn-view" style={{ marginRight: 8 }}>Skills</a>
           <a href="#projects" className="btn-view" style={{ marginRight: 8 }}>Projects</a>
@@ -83,22 +92,13 @@ export default function App() {
           }}
         >
           {resumes.map((r) => (
-            <button
-              key={r.id}
-              onClick={() => handleResumeSwitch(r.id)}
-              style={{
-                padding: "8px 16px",
-                borderRadius: 20,
-                border: portfolio.id === r.id ? "2px solid #f0c040" : "1px solid #ccc",
-                background: portfolio.id === r.id ? "#f5e68d" : "#f0f0f0",
-                color: "#333",
-                fontWeight: portfolio.id === r.id ? "bold" : "normal",
-                cursor: "pointer",
-                transition: "all 0.2s ease",
-              }}
-            >
-              {r.title}
-            </button>
+          <button
+            key={r.id}
+            onClick={() => handleResumeSwitch(r.id)}
+            className={`resume-label ${portfolio.id === r.id ? 'active' : ''}`}
+          >
+            {r.title}
+          </button>
           ))}
         </div>
       </section>
@@ -156,15 +156,7 @@ export default function App() {
           <h2 className="notebook-title" style={{ fontSize: 28, marginBottom: 12 }}>Projects</h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: 16 }}>
             {portfolio.projects && Object.values(portfolio.projects).map((project, idx) => (
-              <article
-                key={idx}
-                style={{
-                  padding: 16,
-                  borderRadius: 10,
-                  border: "2px solid #ccc", // border instead of background
-                  background: "transparent", // remove fill color
-                }}
-              >
+              <article key={idx} className="doodle-card">
                 <h3 style={{ fontFamily: "Permanent Marker, cursive", margin: 0 }}>{project.title}</h3>
                 <p style={{ fontSize: 12, margin: "8px 0", opacity: 1 }}>{project.tags}</p>
                 <p style={{ marginTop: 8 }}>{project.description}</p>
@@ -176,23 +168,13 @@ export default function App() {
           <h2 className="notebook-title" style={{ fontSize: 28, margin: "2rem 0 12px 0" }}>Experience</h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))", gap: 16 }}>
             {portfolio.experiences && Object.values(portfolio.experiences).map((exp, idx) => (
-              <article
-                key={idx}
-                style={{
-                  padding: 16,
-                  borderRadius: 10,
-                  border: "2px solid #ccc", // border for experience cards
-                  background: "transparent", // remove fill color
-                }}
-              >
+              <article key={idx} className="doodle-card">
                 <h3 style={{ fontFamily: "Permanent Marker, cursive", margin: 0 }}>{exp.title}</h3>
                 <p style={{ fontSize: 12, margin: "6px 0", opacity: 1 }}>{exp.company} • {exp.location || ""}</p>
                 <p style={{ fontSize: 12, margin: "6px 0", opacity: 1 }}>{exp.startDate} - {exp.endDate}</p>
-                <ul style={{ marginTop: 8, paddingLeft: 20, listStyleType: "none" }}>
+                <ul className="doodle-list">
                   {exp.responsibilities?.map((resp, i) => (
-                    <li key={i} style={{ position: "relative", paddingLeft: 12 }}>
-                      <span style={{ position: "absolute", left: 0 }}>–</span> {resp}
-                    </li>
+                    <li key={i}>{resp}</li>
                   ))}
                 </ul>
               </article>

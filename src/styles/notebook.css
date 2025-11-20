@@ -34,13 +34,13 @@ html.dark {
   --bg-paper: #09162e;       /* deep charcoal */
   --line-blue: rgba(115, 177, 248, 0.151);
   --line-red: rgba(255, 95, 150, 0.06);
-  --title-color: #f3f7ff;
+  --title-color: #f0f0f5;
   --subtle: #9ca3af;
   --accent: #ff66b2;         /* neon pink */
   --accent-dark: #ff2a8a;
-  --photo-frame: #0f1724;
+  --photo-frame: #f5f8fc;
   --shadow: rgba(0,0,0,0.6);
-  --doodle-1: #ffe066;
+  --doodle-1: #faad08e7;
   --doodle-2: #6fb8ff;
   --doodle-3: #ff9ad6;
 }
@@ -198,4 +198,73 @@ html.dark .notebook {
 
   .polaroid { transform: rotate(-2deg); width: 220px; }
   .name-tag { transform: rotate(0deg); }
+}
+
+/* Custom style for the Resume Switcher buttons */
+.resume-label {
+    padding: 8px 16px;
+    border-radius: 4px; /* Less rounded corners */
+    cursor: pointer;
+    font-family: "Patrick Hand", cursive;
+    font-size: 16px;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5); /* Subtle text lift */
+    transition: all 0.2s ease;
+    border: 1px solid var(--subtle); /* Default subtle border */
+    background: var(--bg-paper);
+}
+
+.resume-label.active {
+    border: 2px solid var(--title-color); /* Darker border when active */
+    background: var(--doodle-1); /* Highlight with the doodle yellow */
+    box-shadow: 4px 4px 0px 0px var(--title-color); /* Marker shadow */
+    transform: translate(-2px, -2px); /* Lift effect */
+    
+}
+
+/* Style for project and experience cards */
+.doodle-card {
+    padding: 16px;
+    border-radius: 12px;
+    background: transparent;
+    /* Simulate a pencil/pen outline */
+    border: 2px dashed var(--subtle); 
+    /* Subtle inner paper shadow to make it feel drawn/sketched */
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s;
+    position: relative;
+    /* Optional: Add a subtle tape doodle corner */
+}
+
+/* Optional Hover/Focus effect */
+.doodle-card:hover {
+    border-color: var(--title-color); /* Darker on hover */
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.1), 3px 3px 0 0 rgba(0, 0, 0, 0.1);
+}
+
+/* Style for bullet points in the experience list */
+.doodle-list {
+    margin-top: 8px;
+    padding-left: 20px;
+    list-style-type: none;
+}
+
+.doodle-list li {
+    position: relative;
+    padding-left: 14px;
+    margin-bottom: 6px;
+    font-family: "Patrick Hand", cursive;
+}
+
+/* Custom hand-drawn bullet (a filled circle or a custom shape) */
+.doodle-list li::before {
+    content: ''; 
+    position: absolute;
+    left: 0;
+    top: 6px; 
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--doodle-1); /* Yellow/Orange accent */
+    border: 1px solid var(--title-color);
+    transform: rotate(-10deg); /* Slight rotation for doodle effect */
 }
