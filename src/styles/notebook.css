@@ -15,8 +15,8 @@ html {
 
 /* Light mode: soft notebook paper with lines */
 html.light {
-  --bg-paper: #fffdf8;       /* warm paper */
-  --line-blue: #cfe8ff;      /* faint blue writing line */
+  --bg-paper: #f5f3ee;       /* warm paper */
+  --line-blue: #98cafa;      /* faint blue writing line */
   --line-red: #ffd6d6;       /* left margin red */
   --title-color: #222;
   --subtle: #6b7280;
@@ -31,8 +31,8 @@ html.light {
 
 /* Dark mode: charcoal paper with neon lines */
 html.dark {
-  --bg-paper: #0b1220;       /* deep charcoal */
-  --line-blue: rgba(63, 153, 255, 0.08);
+  --bg-paper: #09162e;       /* deep charcoal */
+  --line-blue: rgba(115, 177, 248, 0.151);
   --line-red: rgba(255, 95, 150, 0.06);
   --title-color: #f3f7ff;
   --subtle: #9ca3af;
