@@ -8,8 +8,9 @@ import { doc, getDoc, collection, getDocs } from "firebase/firestore";
 export default function App() {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const [videoOpen, setVideoOpen] = useState(false);
-  const [portfolio, setPortfolio] = useState(null); // Selected resume
-  const [resumes, setResumes] = useState([]); // All resumes
+  const [portfolio, setPortfolio] = useState(null);
+  const [resumes, setResumes] = useState([]);
+  const [menuOpen, setMenuOpen] = useState(false); // Mobile menu state
 
   const clickAudio = useRef(typeof Audio !== "undefined" ? new Audio("/click.wav") : null);
   if (clickAudio.current) clickAudio.current.preload = "auto";
@@ -30,19 +31,16 @@ export default function App() {
   useEffect(() => {
     const fetchResumes = async () => {
       try {
-        const colRef = collection(db, "users", "userId", "resumes"); // change "userId" to your actual doc id
+        const colRef = collection(db, "users", "userId", "resumes");
         const snapshot = await getDocs(colRef);
         const allResumes = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         setResumes(allResumes);
-
-        // Set the first resume that is marked as general
         const general = allResumes.find(r => r.isGeneral) || allResumes[0];
         setPortfolio(general);
       } catch (err) {
         console.error("Error fetching resumes:", err);
       }
     };
-
     fetchResumes();
   }, []);
 
@@ -57,48 +55,95 @@ export default function App() {
 
   return (
     <div className="notebook">
-      {/* Sticky nav */}
+      {/* Sticky Nav with Hamburger */}
       <header style={{ position: "fixed", top: 12, left: 0, right: 0, zIndex: 40, display: "flex", justifyContent: "center" }}>
-        <nav style={{ 
-            background: theme === 'light' ? 'var(--doodle-2)' : 'var(--doodle-3)', // Use one of the light doodle colors
-            padding: "6px 12px", 
-            borderRadius: 10,
-            // New style: Slight hand-drawn shadow
-            boxShadow: '4px 4px 0px 0px rgba(0, 0, 0, 0.2)', 
-            // Optional: slight rotation
-            transform: 'rotate(1deg)',
-            border: '1px solid var(--subtle)'
-          }}>
-          <a href="#about" className="btn-view" style={{ marginRight: 8 }}>About</a>
-          <a href="#skills" className="btn-view" style={{ marginRight: 8 }}>Skills</a>
-          <a href="#projects" className="btn-view" style={{ marginRight: 8 }}>Projects</a>
-          <a href="#contact" className="btn-view" style={{ marginRight: 8 }}>Contact</a>
-          <button onClick={handleToggle} className="btn-view" style={{ marginLeft: 8 }}>
-            {theme === "light" ? "Dark" : "Light"}
+        <nav style={{
+          background: theme === 'light' ? 'var(--doodle-2)' : 'var(--doodle-3)',
+          padding: "6px 12px",
+          borderRadius: 10,
+          boxShadow: '4px 4px 0px 0px rgba(0,0,0,0.2)',
+          transform: 'rotate(1deg)',
+          border: '1px solid var(--subtle)',
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 8,
+        }}>
+          {/* Hamburger button */}
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            style={{
+              background: "transparent",
+              border: "1px solid var(--subtle)",
+              padding: "4px 8px",
+              borderRadius: 6,
+              cursor: "pointer",
+              fontSize: 18,
+              display: "none"
+            }}
+            className="hamburger-btn"
+          >
+            ☰ Menu
           </button>
+
+          {/* Nav links */}
+          <div
+            className={`nav-links ${menuOpen ? "open" : ""}`}
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
+              gap: 8,
+              transition: "all 0.3s ease",
+            }}
+          >
+            <a href="#about" className="btn-view">About</a>
+            <a href="#skills" className="btn-view">Skills</a>
+            <a href="#projects" className="btn-view">Projects</a>
+            <a href="#contact" className="btn-view">Contact</a>
+            <button onClick={handleToggle} className="btn-view">
+              {theme === "light" ? "Dark Mode" : "Light Mode"}
+            </button>
+          </div>
         </nav>
+
+        {/* Responsive CSS */}
+        <style jsx>{`
+          @media (max-width: 600px) {
+            .hamburger-btn {
+              display: block;
+            }
+            .nav-links {
+              flex-direction: column;
+              width: 100%;
+              max-height: 0;
+              overflow: hidden;
+            }
+            .nav-links.open {
+              max-height: 500px; /* Enough to show all links */
+              animation: doodle-slide 0.35s ease forwards;
+            }
+            @keyframes doodle-slide {
+              0% { transform: translateY(-20px); opacity: 0; }
+              100% { transform: translateY(0); opacity: 1; }
+            }
+          }
+        `}</style>
       </header>
 
       <div style={{ height: 8 }} />
 
       {/* Resume Switcher */}
       <section style={{ textAlign: "center", margin: "3.5rem 0" }}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            flexWrap: "wrap",
-            gap: "14px",
-          }}
-        >
+        <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: "14px" }}>
           {resumes.map((r) => (
-          <button
-            key={r.id}
-            onClick={() => handleResumeSwitch(r.id)}
-            className={`resume-label ${portfolio.id === r.id ? 'active' : ''}`}
-          >
-            {r.title}
-          </button>
+            <button
+              key={r.id}
+              onClick={() => handleResumeSwitch(r.id)}
+              className={`resume-label ${portfolio.id === r.id ? 'active' : ''}`}
+            >
+              {r.title}
+            </button>
           ))}
         </div>
       </section>
@@ -107,8 +152,7 @@ export default function App() {
       <section id="about" style={{ display: "flex", justifyContent: "center", width: "100%", marginBottom: 48 }}>
         <div className="cover-card" role="region" aria-labelledby="cover-title"
           style={{ display: "flex", flexWrap: "wrap", gap: 32, maxWidth: 1100, width: "100%", alignItems: "flex-start" }}>
-          
-          {/* Left */}
+
           <div className="cover-left" style={{ flex: "2 1 400px", minWidth: 360 }}>
             <h1 id="cover-title" className="notebook-title">{portfolio.title}</h1>
             <div className="notebook-sub">{portfolio.jobCategory}</div>
@@ -119,13 +163,12 @@ export default function App() {
               <a className="btn-view" href="#projects" style={{ textDecoration: "none" }}>Projects</a>
             </div>
 
-            <button onClick={toggleVideo} style={{ display: "flex", alignItems: "center", gap: 6, cursor: "pointer", marginBottom: 16 }} aria-expanded={videoOpen}>
+            <button onClick={() => setVideoOpen(!videoOpen)} style={{ display: "flex", alignItems: "center", gap: 6, cursor: "pointer", marginBottom: 16 }} aria-expanded={videoOpen}>
               {videoOpen ? "Hide Video" : "Watch Video"}
               <span style={{ display: "inline-block", transform: videoOpen ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.3s ease" }}>▼</span>
             </button>
           </div>
 
-          {/* Right */}
           <div style={{ flex: "0 0 320px", display: "flex", justifyContent: "center", alignItems: "flex-start", marginTop: 50 }}>
             {videoOpen ? (
               <video src="/about-me.mp4" controls style={{ width: 320, height: 320, borderRadius: 12, objectFit: "cover" }} aria-label="About Me Video" />
@@ -135,7 +178,7 @@ export default function App() {
           </div>
         </div>
       </section>
-
+      
       {/* Skills */}
       <section id="skills" style={{ padding: "2rem 1rem", width: "100%", display: "flex", justifyContent: "center" }}>
         <div style={{ maxWidth: 1100, width: "100%" }}>
