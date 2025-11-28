@@ -151,38 +151,202 @@ export default function App() {
         </div>
       </section>
 
-      {/* Projects */}
-      <section id="projects" style={{ padding: "2rem 1rem", width: "100%", display: "flex", justifyContent: "center" }}>
-        <div style={{ maxWidth: 1200, width: "100%" }}>
-          <h2 className="notebook-title" style={{ fontSize: 28, marginBottom: 12 }}>Projects</h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: 16 }}>
-            {portfolio.projects && Object.values(portfolio.projects).map((project, idx) => (
-              <article key={idx} className="doodle-card">
-                <h3 style={{ fontFamily: "Permanent Marker, cursive", margin: 0 }}>{project.title}</h3>
-                <p style={{ fontSize: 12, margin: "8px 0", opacity: 1 }}>{project.tags}</p>
-                <p style={{ marginTop: 8 }}>{project.description}</p>
-              </article>
-            ))}
-          </div>
+          {/* Projects & Experience Section */}
+          <section
+            id="projects"
+            style={{
+              padding: "2rem 1rem",
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <div style={{ maxWidth: 1200, width: "100%" }}>
 
-          {/* Experiences */}
-          <h2 className="notebook-title" style={{ fontSize: 28, margin: "2rem 0 12px 0" }}>Experience</h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))", gap: 16 }}>
-            {portfolio.experiences && Object.values(portfolio.experiences).map((exp, idx) => (
-              <article key={idx} className="doodle-card">
-                <h3 style={{ fontFamily: "Permanent Marker, cursive", margin: 0 }}>{exp.title}</h3>
-                <p style={{ fontSize: 12, margin: "6px 0", opacity: 1 }}>{exp.company} • {exp.location || ""}</p>
-                <p style={{ fontSize: 12, margin: "6px 0", opacity: 1 }}>{exp.startDate} - {exp.endDate}</p>
-                <ul className="doodle-list">
-                  {exp.responsibilities?.map((resp, i) => (
-                    <li key={i}>{resp}</li>
+              {/* Projects */}
+              <h2 className="notebook-title" style={{ fontSize: 28, marginBottom: 12 }}>
+                Projects
+              </h2>
+
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))",
+                  gap: 16,
+                }}
+              >
+                {portfolio.projects &&
+                  Object.entries(portfolio.projects).map(([projectId, project]) => (
+                    <article key={projectId} className="doodle-card">
+                      <h3 style={{ fontFamily: "Permanent Marker, cursive", margin: 0 }}>
+                        {project.title}
+                      </h3>
+                      <p style={{ fontSize: 12, margin: "8px 0", opacity: 1 }}>
+                        {project.tags}
+                      </p>
+                      <p style={{ marginTop: 8 }}>{project.description}</p>
+
+                      {/* Optional Media (manually added if needed) */}
+                      {projectId === "projectId6" && (
+                        <a
+                          href="https://www.figma.com/design/XHQ6Ic2Ili6YFGTC3SogTc/HoneyBee-Physiotherapy-Centre?node-id=0-1&t=w6qfp3n6wbK7b2WG-1"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{ display: "block", marginTop: 8, color: "#0070f3", textDecoration: "underline" }}
+                        >
+                          Figma Design
+                        </a>
+                      )}
+
+                      {/* Manually added links per project */}
+                      <div style={{ marginTop: 8 }}>
+                        {projectId === "projectId1" && (
+                          <a
+                            href="https://github.com/elly-02/HumanResourceManagement"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ display: "block", color: "#0070f3", textDecoration: "underline" }}
+                          >
+                            GitHub Repository
+                          </a>
+                        )}
+                        {projectId === "projectId2" && (
+                          <>
+                            <a
+                              href="https://github.com/Charlotte-720/OWSB"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              style={{ display: "block", color: "#0070f3", textDecoration: "underline" }}
+                            >
+                              GitHub Repository
+                            </a>
+                          </>
+                        )}
+                        {projectId === "projectId3" && (
+                          <>
+                            <a
+                              href="https://github.com/gananwen/foodieBox"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              style={{ display: "block", color: "#0070f3", textDecoration: "underline" }}
+                            >
+                              GitHub Repository
+                            </a>
+                            <a
+                              href="https://www.figma.com/design/cnXv7k56l0ZSJCbcunizep/MAE?node-id=10-379&t=gJixVnDgpBhP7GFg-1"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              style={{ display: "block", marginTop: 8, color: "#0070f3", textDecoration: "underline" }}
+                            >
+                              Figma Design
+                            </a>
+                          </>
+                        )}
+                        {projectId === "projectId4" && (
+                          <>
+                            <a
+                              href="https://github.com/sevenpluseight/dstr-lab2"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              style={{ display: "block", color: "#0070f3", textDecoration: "underline" }}
+                            >
+                              GitHub Repository
+                            </a>
+                          </>
+                        )}
+                        {projectId === "projectId5" && (
+                          <>
+                            <a
+                              href="https://github.com/elly-02/Resume-JobMatching"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              style={{ display: "block", color: "#0070f3", textDecoration: "underline" }}
+                            >
+                              GitHub Repository
+                            </a>
+                          </>
+                        )}
+                        {projectId === "projectId7" && (
+                          <>
+                             <a
+                              href="https://www.canva.com/design/DAGsQWfX2VE/CY1KAobdWfCnXPAszVkEuw/edit?utm_content=DAGsQWfX2VE&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              style={{ display: "block", marginTop: 8, color: "#0070f3", textDecoration: "underline" }}
+                            >
+                              Canva Slide
+                            </a>
+                          </>
+                        )}
+                        {projectId === "projectId8" && (
+                          <>
+                            <a
+                              href="https://www.canva.com/design/DAGzl4tJQOY/_HCfy15xO44Otg6pMiPyCw/edit?utm_content=DAGzl4tJQOY&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              style={{ display: "block", marginTop: 8, color: "#0070f3", textDecoration: "underline" }}
+                            >
+                              Canva Slide
+                            </a>
+
+                            <video
+                              src="/AIDemoVid.mp4"
+                              controls
+                              style={{ width: "100%", marginTop: 8, borderRadius: 8 }}
+                            />
+
+                            <a
+                              href="https://github.com/sevenpluseight/gerak-ai"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              style={{ display: "block", marginTop: 8, color: "#0070f3", textDecoration: "underline" }}
+                            >
+                              GitHub Repository
+                            </a>
+                          </>
+                        )}
+                      </div>
+                    </article>
                   ))}
-                </ul>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+              </div>
+
+              {/* Experiences */}
+              <h2
+                className="notebook-title"
+                style={{ fontSize: 28, margin: "2rem 0 12px 0" }}
+              >
+                Experience
+              </h2>
+
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))",
+                  gap: 16,
+                }}
+              >
+                {portfolio.experiences &&
+                  Object.values(portfolio.experiences).map((exp, idx) => (
+                    <article key={idx} className="doodle-card">
+                      <h3 style={{ fontFamily: "Permanent Marker, cursive", margin: 0 }}>
+                        {exp.title}
+                      </h3>
+                      <p style={{ fontSize: 12, margin: "6px 0", opacity: 1 }}>
+                        {exp.company} {exp.location ? `• ${exp.location}` : ""}
+                      </p>
+                      <p style={{ fontSize: 12, margin: "6px 0", opacity: 1 }}>
+                        {exp.startDate} - {exp.endDate}
+                      </p>
+                      <ul className="doodle-list">
+                        {exp.responsibilities?.map((resp, i) => (
+                          <li key={i}>{resp}</li>
+                        ))}
+                      </ul>
+                    </article>
+                  ))}
+              </div>
+            </div>
+          </section>
 
       {/* Contact */}
       <section
